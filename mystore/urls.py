@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from api import views
+from rest_framework.routers import DefaultRouter
+
+router=DefaultRouter()
+
+router.register('api/products',views.ProductViewsetView,basename='products')
+router.register('user',views.UserView,basename='user')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('products',views.ProductView.as_view()),
+    path('products/<int:id>',views.ProductDetailView.as_view()),
+    path('carts/<int:id>',views.CartView.as_view()),
+]+router.urls
